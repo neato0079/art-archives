@@ -1,55 +1,37 @@
 const fs = require('fs');
-const axios = require('axios')
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
-const downloadImage = async (url, path) => {
-    const response = await axios.get(url);
-    // console.log(response.data)
-    const base = await response.data.toString('base64')
-    // console.log(`BASE64: ${test}`)
-    // console.log(`Axios get status:${response.status}`)
-    // const blob = await response.blob();
-    // const arrayBuffer = await response.arrayBuffer();
-    // const buffer = Buffer.from(arrayBuffer);
-    const buffer = Buffer.from(base) 
-    console.log(buffer)
-    fs.writeFileSync(path, buffer);
-}
-
-const downloadLocalImage = async (url, path) => {
-    const encodedImage = fs.readFileSync(url)
-    // console.log(`Axios get status:${response.status}`)
-    // const blob = await response.blob();
-    // const arrayBuffer = await response.arrayBuffer();
-    // const buffer = Buffer.from(arrayBuffer);
-
-    // console.log(encodedImage)
-    await fs.writeFileSync(path, encodedImage);
-}
 
 const dl = async (path, url) => {
     const response = await fetch(url);
-    console.log(typeof response)
     const buffer = await response.buffer();
     fs.writeFile(path, buffer, () => 
       console.log('finished downloading!'));
 }
 
-const axiosDL = async (path, url) => {
-    const response = await axios.get(url);
-    console.log(response.data)
-    const buffer = await response.data.buffer();
-    fs.writeFile(path, buffer, () => 
-      console.log('finished downloading!'));
+const dlArray = async (urlArray) => {
+    let imageCount = 1;
+
+    urlArray.forEach(async url => {
+        const response = await fetch(url);
+        const buffer = await response.buffer();
+        fs.writeFile(`image${imageCount}.png`, buffer, () => {
+            console.log(`finished downloading image ${imageCount}!`);
+            imageCount += 1;
+        })
+    })
 }
 
-const localImage = '/home/mattq/Pictures/test.png'
-const sabePic = 'https://sabe.io/images/saturn.png'
-const twitPic = 'https://pbs.twimg.com/media/FiMjwwgVEAAMbif?format=jpg&name=medium'
 
-// downloadImage(sabePic, "./sample-pic.png"); 
-// downloadLocalImage(localImage, 'local-test.png')
+const localImage = '/home/mattq/Pictures/test.png';
+const sabePic = 'https://sabe.io/images/saturn.png';
+const twitPic = 'https://pbs.twimg.com/media/FiMjwwgVEAAMbif?format=jpg&name=medium';
+const redditPic = 'https://i.redd.it/jd8kg2f04f1a1.jpg';
 
-dl('./test-fetch.png', twitPic)
+const imageArray = [sabePic, twitPic, redditPic]
 
-// axiosDL('./test-fetch', twitPic)
+dlArray(imageArray)
+
+// dl('./test-fetch.png', twitPic)
+
+
