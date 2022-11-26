@@ -5,8 +5,8 @@ const fetch = require('node-fetch');
 const dl = async (path, url) => {
     const response = await fetch(url);
     const buffer = await response.buffer();
-    fs.writeFile(path, buffer, () => 
-      console.log('finished downloading!'));
+    fs.writeFile(path, buffer, () =>
+        console.log('finished downloading!'));
 }
 
 const dlArray = async (urlArray) => {
