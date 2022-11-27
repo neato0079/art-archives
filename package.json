@@ -4,6 +4,7 @@
   "description": "Collect art from twitter in case it dies",
   "main": "index.js",
   "scripts": {
+    "art-get": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
