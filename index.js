@@ -22,6 +22,7 @@ require('dotenv').config();
 const myTwitterProfile = 'Mattbot8'
 
 const getUserID = async (userName) => {
+    console.log(`USER NAME: ${userName}`)
     axios({
         method: 'get',
         url: `https://api.twitter.com/2/users/by/username/${userName}`,
@@ -31,11 +32,35 @@ const getUserID = async (userName) => {
     })
         .then(response => {
             const userID = response.data.data.id
-            console.log(userID)
+            console.log(response.data)
+            // console.log(userID)
             return userID
         })
-        .catch(e => {throw e})
+        .catch(e => { throw e })
 
 }
+
+const getTwitterTimeline = async () => {
+    const userID = await getUserID(myTwitterProfile) //this is returning undefined for some reason
+    console.log(userID)
+    axios({
+        method: 'get',
+        url: `https://api.twitter.com/2/users/${userID}/tweets`,
+        headers: {
+            Authorization: `Bearer ${process.env.BEARER_TOKEN}`
+        }
+    })
+        .then(response => {
+            console.log(response)
+        })
+        .catch(e => { throw e })
+}
+
+const test = async () => {
+    const userID = await getUserID(myTwitterProfile) //this is returning undefined for some reason
+    console.log(userID)
+}
+
+// test()
 
 getUserID(myTwitterProfile)
