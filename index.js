@@ -13,3 +13,29 @@
 // Finally, media in Tweets are always guaranteed to be in the Media Library.
 
 // The following table summarizes which assets are retrievable in the Media Library, taking into account whether the resource response includes an identifier to use in the lookup.
+
+// The following code follows this article https://developer.twitter.com/en/docs/tutorials/explore-a-users-tweets
+
+const axios = require('axios').default
+require('dotenv').config();
+
+const myTwitterProfile = 'Mattbot8'
+
+const getUserID = async (userName) => {
+    axios({
+        method: 'get',
+        url: `https://api.twitter.com/2/users/by/username/${userName}`,
+        headers: {
+            Authorization: `Bearer ${process.env.BEARER_TOKEN}`
+        }
+    })
+        .then(response => {
+            const userID = response.data.data.id
+            console.log(userID)
+            return userID
+        })
+        .catch(e => {throw e})
+
+}
+
+getUserID(myTwitterProfile)
