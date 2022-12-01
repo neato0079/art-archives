@@ -5,11 +5,11 @@ const axios = require('axios');
 const dlAxios = async (url) => {
     axios({
         method: 'get',
-        url: 'http://bit.ly/2mTM3nY',
+        url: url,
         responseType: 'stream'
       })
         .then(function (response) {
-          response.data.pipe(fs.createWriteStream('ada_lovelace.jpg'))
+          response.data.pipe(fs.createWriteStream('axios-test.png'))
         });
 }
 
@@ -41,7 +41,9 @@ const redditPic = 'https://i.redd.it/jd8kg2f04f1a1.jpg';
 
 const imageArray = [sabePic, twitPic, redditPic]
 
-dlArray(imageArray)
+// dlArray(imageArray)
+
+dlAxios(redditPic)
 
 // dl('./test-fetch.png', twitPic)
 
