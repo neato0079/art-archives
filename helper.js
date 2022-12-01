@@ -7,9 +7,9 @@ const dlAxios = async (url) => {
         method: 'get',
         url: url,
         responseType: 'stream'
-      })
+    })
         .then(function (response) {
-          response.data.pipe(fs.createWriteStream('axios-test.png'))
+            response.data.pipe(fs.createWriteStream('axios-test.png'))
         });
 }
 
