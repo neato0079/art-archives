@@ -16,14 +16,14 @@
 
 // The following code follows this article https://developer.twitter.com/en/docs/tutorials/explore-a-users-tweets
 
-const axios = require('axios').default
+const axios = require('axios').default;
 require('dotenv').config();
 
-const myTwitterProfile = 'Mattbot8'
+const myTwitterProfile = 'Mattbot8';
 
 const getUserID = async (userName) => {
-    console.log(`USER NAME: ${userName}`)
-    axios({
+    // console.log(`USER NAME: ${userName}`);
+    return axios({
         method: 'get',
         url: `https://api.twitter.com/2/users/by/username/${userName}`,
         headers: {
@@ -31,18 +31,17 @@ const getUserID = async (userName) => {
         }
     })
         .then(response => {
-            const userID = response.data.data.id
-            console.log(response.data)
+            const userID = response.data.data.id;
+            // console.log(response.data);
             // console.log(userID)
-            return userID
+            return userID;
         })
-        .catch(e => { throw e })
-
-}
+        .catch(e => { throw e });
+};
 
 const getTwitterTimeline = async () => {
-    const userID = await getUserID(myTwitterProfile) //this is returning undefined for some reason
-    console.log(userID)
+    const userID = await getUserID(myTwitterProfile); 
+    console.log(userID);
     axios({
         method: 'get',
         url: `https://api.twitter.com/2/users/${userID}/tweets`,
@@ -51,16 +50,9 @@ const getTwitterTimeline = async () => {
         }
     })
         .then(response => {
-            console.log(response)
+            console.log(response);
         })
-        .catch(e => { throw e })
-}
+        .catch(e => { throw e });
+};
 
-const test = async () => {
-    const userID = await getUserID(myTwitterProfile) //this is returning undefined for some reason
-    console.log(userID)
-}
-
-// test()
-
-getUserID(myTwitterProfile)
+getTwitterTimeline();
