@@ -55,4 +55,24 @@ const getTwitterTimeline = async () => {
         .catch(e => { throw e });
 };
 
-getTwitterTimeline();
+const getUserMedia = async () => {
+    const userID = await getUserID(myTwitterProfile); 
+    // console.log(userID);
+    axios({
+        method: 'get',
+        url: `https://api.twitter.com/2/users/${userID}/tweets`,
+        headers: {
+            Authorization: `Bearer ${process.env.BEARER_TOKEN}`
+        }
+    })
+        .then(response => {
+            // console.log(response);
+            const data1 = response.data.data[0]
+            console.log(JSON.stringify(data1))
+        })
+        .catch(e => { throw e });
+};
+
+getUserMedia();
+
+// PLAN: get media library from a given user. Get the media IDs for all image media in that library. Convert media ID to url? Download image urls to disk
