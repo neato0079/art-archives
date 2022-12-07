@@ -64,15 +64,15 @@ const getUserMedia = async () => {
 
 const getUserMedia2 = async () => {
     const userID = await getUserID(myTwitterProfile);
-    const userTimelineEndpoint = `https://api.twitter.com/2/users/${userID}/tweets?max_results=100&expansions=attachments.media_keys&media.fields=url`
+    const userTimelineEndpoint = `https://api.twitter.com/2/users/${userID}/tweets?max_results=5&expansions=attachments.media_keys&media.fields=url`
 
-// `https://api.twitter.com/2/users/${userID}/tweets?tweet.fields=created_at&exclude=retweets,replies&max_results=100&expansions=attachments.media_keys&media.fields=url`
+    const noRepliesOrRetweets = `https://api.twitter.com/2/users/${userID}/tweets?exclude=retweets,replies&max_results=100&expansions=attachments.media_keys&media.fields=url`
 
     const sampleEndpoint = 'https://api.twitter.com/2/users/2244994945/tweets?tweet.fields=created_at&max_results=100&start_time=2019-01-01T17:00:00Z&end_time=2020-12-12T01:00:00Z'
     // console.log(userID);
     axios({
         method: 'get',
-        url: userTimelineEndpoint,
+        url: noRepliesOrRetweets,
         // url: `https://api.twitter.com/2/users/${userID}/tweets?max_results=100`,
         // url: 'https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev',
         headers: {
@@ -84,6 +84,8 @@ const getUserMedia2 = async () => {
             const mediaLibrary = []
             const userMedia = response.data.includes.media
             for (media of userMedia) {
+                // console.log(`User media:\n${userMedia[0]}`)
+                // console.log(response.data.data[0])
                 const mediaURL = media.url
                 if (mediaURL) {
                     mediaLibrary.push(mediaURL);
@@ -93,7 +95,10 @@ const getUserMedia2 = async () => {
             console.log(mediaLibrary)
             console.log(`Found ${mediaLibrary.length} media url(s)`)
         })
-        .catch(e => { throw e });
+        .catch(e => {
+            console.log(`Twitter API problem? Here's the error!: ${e}`)
+            throw e 
+            });
 };
 
 // getUserID(myTwitterProfile)
