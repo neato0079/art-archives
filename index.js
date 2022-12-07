@@ -105,3 +105,9 @@ const getUserMedia2 = async () => {
 getUserMedia2();
 // getTwitterTimeline();
 // PLAN: get media library from a given user. Get the media IDs for all image media in that library. Convert media ID to url? Download image urls to disk
+
+// Maybe something like
+/* 
+while continuing_token == True
+    starting_id = ending_id
+*/
