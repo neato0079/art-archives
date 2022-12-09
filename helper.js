@@ -1,9 +1,12 @@
 const fs = require('fs');
 const axios = require('axios');
 
-const dlAxiosArray = async (urlArray) => {
+const dlAxiosArray = async (folderName, urlArray) => {
     let imageCount = 1;
 
+    if (!fs.existsSync(`archives/${folderName}`)) {
+        fs.mkdirSync(`archives/${folderName}`);
+    }
     urlArray.forEach(async url => {
         axios({
             method: 'get',
@@ -11,7 +14,7 @@ const dlAxiosArray = async (urlArray) => {
             responseType: 'stream'
         })
             .then(function (response) {
-                response.data.pipe(fs.createWriteStream(`axios-test${imageCount}.png`))
+                response.data.pipe(fs.createWriteStream(`archives/${folderName}/${folderName}image${imageCount}.png`))
                 console.log(`finished downloading image ${imageCount}!`);
                 imageCount += 1;
 
@@ -32,8 +35,11 @@ const imageArray = [sabePic, twitPic, redditPic]
 
 // dlAxios(redditPic)
 
-dlAxiosArray(imageArray)
+// dlAxiosArray('poop',imageArray)
 
 // dl('./test-fetch.png', twitPic)
 
 
+module.exports = {
+    dlAxiosArray
+  }
