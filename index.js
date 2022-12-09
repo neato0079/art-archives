@@ -6,8 +6,9 @@
 
 const axios = require('axios').default;
 require('dotenv').config();
+const helper = require('./helper')
 
-const myTwitterProfile = 'Mattbot8';
+
 
 const getUserID = async (userName) => {
 
@@ -25,7 +26,7 @@ const getUserID = async (userName) => {
         .catch(e => { throw e });
 };
 
-const buildMediaLibrary = async (userID, untilID) => {
+const continueBuildingMediaLibrary = async (userID, untilID) => {
     console.log('Checking for more user media...')
 
     const noRepliesOrRetweetsTwitterTimeline = `https://api.twitter.com/2/users/${userID}/tweets?exclude=retweets,replies&max_results=100&expansions=attachments.media_keys&media.fields=url&until_id=${untilID}`
@@ -66,12 +67,12 @@ const buildMediaLibrary = async (userID, untilID) => {
         });
 };
 
-const getAllUserMedia = async () => {
-    const userID = await getUserID(myTwitterProfile);
+const getAllUserMedia = async (twitterProfile) => {
+    const userID = await getUserID(twitterProfile);
 
     const firstCall = `https://api.twitter.com/2/users/${userID}/tweets?exclude=retweets,replies&max_results=100&expansions=attachments.media_keys&media.fields=url`
 
-    axios({
+    return axios({
         method: 'get',
         url: firstCall,
         headers: {
@@ -81,9 +82,9 @@ const getAllUserMedia = async () => {
         .then(async response => {
             const oldestTweetResult = response.data.meta.oldest_id
             let mediaLibrary = []
-            const userMedia = response.data.includes.media
+            const userMedia = response.data.includes.media // this may not include all of the the user's media due to twitter API's response cap
             for (media of userMedia) {
-                const mediaURL = media.url
+                const mediaURL = media.url 
                 if (mediaURL) {
                     mediaLibrary.push(mediaURL);
                 }
@@ -91,17 +92,19 @@ const getAllUserMedia = async () => {
 
             console.log(`Found ${mediaLibrary.length} media url(s) on first pass`)
 
-            let { additionalMedia, updatedOldestTweet } = await buildMediaLibrary(userID, oldestTweetResult);
+            // Check if there are additional media and push those to the current media library
+            // This is done by checking the oldest tweet in the response and using that as the next starting point
+            let { additionalMedia, updatedOldestTweet } = await continueBuildingMediaLibrary(userID, oldestTweetResult);
             mediaLibrary.push(...additionalMedia)
             while (updatedOldestTweet) {
-                const result = await buildMediaLibrary(userID, updatedOldestTweet);
+                const result = await continueBuildingMediaLibrary(userID, updatedOldestTweet);
                 mediaLibrary.push(...result.additionalMedia)
                 updatedOldestTweet = result.updatedOldestTweet
                 console.log(`Current total: ${mediaLibrary.length} media url(s)`)
 
             }
 
-            console.log(mediaLibrary)
+            // console.log(mediaLibrary)
             console.log(`Found ${mediaLibrary.length} media url(s)`)
             return mediaLibrary
         })
@@ -111,4 +114,18 @@ const getAllUserMedia = async () => {
         });
 };
 
-getAllUserMedia();
+
+
+const main = async () => {
+
+    const twitterProfile = 'Mattbot8';
+
+    const mediaURLs = await getAllUserMedia(twitterProfile);
+    console.log(mediaURLs)
+
+    helper.dlAxiosArray(twitterProfile, mediaURLs)
+}
+// console.log(mediaURLs)
+
+main()
+
