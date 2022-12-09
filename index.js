@@ -64,9 +64,15 @@ const getUserMedia = async () => {
 
 const getUserMedia2 = async () => {
     const userID = await getUserID(myTwitterProfile);
+
+    const untilID = 'until_id=1378008894270672896'
+    const sinceID = 'since_id=1378008894270672896'
+
     const userTimelineEndpoint = `https://api.twitter.com/2/users/${userID}/tweets?max_results=5&expansions=attachments.media_keys&media.fields=url`
 
-    const noRepliesOrRetweets = `https://api.twitter.com/2/users/${userID}/tweets?exclude=retweets,replies&max_results=100&expansions=attachments.media_keys&media.fields=url`
+    const noRepliesOrRetweets = `https://api.twitter.com/2/users/${userID}/tweets?exclude=retweets,replies&max_results=100&expansions=attachments.media_keys&media.fields=url&${untilID}`
+
+    const filteredTweets =`https://api.twitter.com/2/users/${userID}/tweets?max_results=100&expansions=attachments.media_keys,referenced_tweets.id&media.fields=url&tweet.fields=referenced_tweets`
 
     const sampleEndpoint = 'https://api.twitter.com/2/users/2244994945/tweets?tweet.fields=created_at&max_results=100&start_time=2019-01-01T17:00:00Z&end_time=2020-12-12T01:00:00Z'
     // console.log(userID);
@@ -80,7 +86,8 @@ const getUserMedia2 = async () => {
         }
     })
         .then(response => {
-            console.log(response);
+            // const oldestTweetResult = response.data.meta.oldest_id
+            // console.log(oldestTweetResult);
             const mediaLibrary = []
             const userMedia = response.data.includes.media
             for (media of userMedia) {
