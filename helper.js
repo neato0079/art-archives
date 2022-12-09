@@ -1,37 +1,24 @@
 const fs = require('fs');
-const fetch = require('node-fetch');
 const axios = require('axios');
 
-const dlAxios = async (url) => {
-    axios({
-        method: 'get',
-        url: url,
-        responseType: 'stream'
-    })
-        .then(function (response) {
-            response.data.pipe(fs.createWriteStream('axios-test.png'))
-        });
-}
-
-const dl = async (path, url) => {
-    const response = await fetch(url);
-    const buffer = await response.buffer();
-    fs.writeFile(path, buffer, () =>
-        console.log('finished downloading!'));
-}
-
-const dlArray = async (urlArray) => {
+const dlAxiosArray = async (urlArray) => {
     let imageCount = 1;
 
     urlArray.forEach(async url => {
-        const response = await fetch(url);
-        const buffer = await response.buffer();
-        fs.writeFile(`image${imageCount}.png`, buffer, () => {
-            console.log(`finished downloading image ${imageCount}!`);
-            imageCount += 1;
+        axios({
+            method: 'get',
+            url: url,
+            responseType: 'stream'
         })
-    })
-}
+            .then(function (response) {
+                response.data.pipe(fs.createWriteStream(`axios-test${imageCount}.png`))
+                console.log(`finished downloading image ${imageCount}!`);
+                imageCount += 1;
+
+            });
+    });
+};
+
 
 
 const localImage = '/home/mattq/Pictures/test.png';
@@ -43,7 +30,9 @@ const imageArray = [sabePic, twitPic, redditPic]
 
 // dlArray(imageArray)
 
-dlAxios(redditPic)
+// dlAxios(redditPic)
+
+dlAxiosArray(imageArray)
 
 // dl('./test-fetch.png', twitPic)
 
