@@ -1,7 +1,7 @@
 # art-archives
-A node program for archiving art from twitter in case it dies.
+A node.js program for archiving art from twitter in case it dies.
 
-Run the program with either of the following commands:
+After node.js is installed, and you have set up the program, run the program with either of the following commands:
 
 ```node index.js <twitter username>```
 
@@ -11,7 +11,18 @@ or
 
 This program will find all user posted images from a specified twitter user and download them into a respective folder.
 
-## Setup
+# Instructions:
+
+## Install Node.js First!
+
+For Windows: https://www.geeksforgeeks.org/installation-of-node-js-on-windows/
+
+For Linux: https://www.geeksforgeeks.org/installation-of-node-js-on-linux/
+
+For Mac OS: https://www.webucator.com/article/how-to-install-nodejs-on-a-mac/
+
+
+## Program Setup
 
 You will need to sign up for a Twitter developer account and to have created a Twitter App. Once you have those, you'll also need to obtain the API keys found in the developer portal. Follow the steps below:
 
