@@ -1,5 +1,5 @@
 # art-archives
-Collect art from twitter in case it dies.
+A node programe for archiving art from twitter in case it dies.
 
 Run the program with either of the following commands:
 
