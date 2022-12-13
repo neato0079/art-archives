@@ -1,14 +1,10 @@
-// Some of the following code follows this article https://developer.twitter.com/en/docs/tutorials/explore-a-users-tweets
-
-// Use this reference to configure url endpoints for fetching user data https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users
-
-// https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-tweets
-
 const axios = require('axios').default;
 require('dotenv').config();
+const fs = require('fs');
+const downloadDirectory = './archives';
 const helper = require('./helper')
 
-
+const cliArgument = process.argv[2];
 
 const getUserID = async (userName) => {
 
@@ -84,7 +80,7 @@ const getAllUserMedia = async (twitterProfile) => {
             let mediaLibrary = []
             const userMedia = response.data.includes.media // this may not include all of the the user's media due to twitter API's response cap
             for (media of userMedia) {
-                const mediaURL = media.url 
+                const mediaURL = media.url
                 if (mediaURL) {
                     mediaLibrary.push(mediaURL);
                 }
@@ -114,11 +110,11 @@ const getAllUserMedia = async (twitterProfile) => {
         });
 };
 
-
-
-const main = async () => {
-
-    const twitterProfile = 'Mattbot8';
+const main = async (twitterProfile) => {
+    // create download directory if it hasn't been created already
+    if (!fs.existsSync(downloadDirectory)) {
+        fs.mkdirSync(downloadDirectory);
+    }
 
     const mediaURLs = await getAllUserMedia(twitterProfile);
     console.log(mediaURLs)
@@ -127,5 +123,5 @@ const main = async () => {
 }
 // console.log(mediaURLs)
 
-main()
+main(cliArgument)
 
