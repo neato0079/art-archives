@@ -19,6 +19,6 @@ You will need to sign up for a Twitter developer account and to have created a T
 2. Navigate to the Twitter App dashboard and create a new Twitter App for which you would like to generate access tokens.
 3. Navigate to the "keys and tokens" page.
 4. You'll find the API keys, user Access Tokens, and Bearer Token on this page.
-5. You only need the Bearer Token for this program. Copy it and create a `.env` file in the root folder.
+5. You only need the Bearer Token for this program. Copy it and create a `.env` file in the program's root folder.
 6. Inside your `.env` file enter the following and save: ```export BEARER_TOKEN=<paste your Bearer token here>```
 7. That's it! You can now run the program and start archiving your favorite artists on twitter!
