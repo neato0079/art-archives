@@ -61,7 +61,7 @@ const continueBuildingMediaLibrary = async (userID, untilID) => {
 
                 return {
                     additionalMedia: mediaLibrary,
-                    updatedOldestTweet: response.data.meta.oldest_id // this returns undefined to stop the while loop @ line 95
+                    updatedOldestTweet: response.data.meta.oldest_id // this returns undefined to stop the while loop @ line 115
                 }
             };
             const userMedia = response.data.includes.media;
