@@ -66,9 +66,9 @@ const continueBuildingMediaLibrary = async (userID, untilID) => {
             };
             const userMedia = response.data.includes.media;
             for (media of userMedia) {
-                const mediaURL = media.url
+                const mediaURL = media.url;
                 if (mediaURL) {
-                    mediaLibrary.push(mediaURL);
+                    mediaLibrary.push(mediaURL.replace(".jpg", "?format=jpg&name=orig"));
                 };
             };
             console.log(`Found ${userMedia.length} more media url(s)`);
@@ -102,7 +102,7 @@ const getAllUserMedia = async (twitterProfile) => {
             for (media of userMedia) {
                 const mediaURL = media.url;
                 if (mediaURL) {
-                    mediaLibrary.push(mediaURL);
+                    mediaLibrary.push(mediaURL.replace(".jpg", "?format=jpg&name=orig"));
                 }
             }
 
@@ -133,3 +133,5 @@ module.exports = {
     dlAxiosArray,
     getAllUserMedia
   };
+
+// TODO: Tim's request: make a function that returns all likes from a given date onwards
