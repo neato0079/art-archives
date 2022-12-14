@@ -32,4 +32,5 @@ You will need to sign up for a Twitter developer account and to have created a T
 4. You'll find the API keys, user Access Tokens, and Bearer Token on this page.
 5. You only need the Bearer Token for this program. Copy it and create a `.env` file in the program's root folder.
 6. Inside your `.env` file enter the following and save: ```export BEARER_TOKEN=<paste your Bearer token here>```
-7. That's it! You can now run the program and start archiving your favorite artists on twitter!
+7. While in the root folder of this code, run `npm i` to ensure you have the relevant dependancies installed
+8. That's it! You can now run the program and start archiving your favorite artists on twitter!
