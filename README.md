@@ -1,13 +1,6 @@
 # art-archives
 A node.js program for archiving art from twitter in case it dies.
 
-After node.js is installed, and you have set up the program, run the program with either of the following commands:
-
-```node index.js <twitter username>```
-
-or
-
-```npm run art-get <twitter username>```
 
 This program will find all user posted images from a specified twitter user and download them into a respective folder.
 
@@ -34,3 +27,16 @@ You will need to sign up for a Twitter developer account and to have created a T
 6. Inside your `.env` file enter the following and save: ```export BEARER_TOKEN=<paste your Bearer token here>```
 7. While in the root folder of this code, run `npm i` to ensure you have the relevant dependancies installed
 8. That's it! You can now run the program and start archiving your favorite artists on twitter!
+
+After node.js is installed, and you have set up the program, run the program with either of the following commands:
+
+```node index.js <twitter username>```
+
+or
+
+```npm run art-get <twitter username>```
+
+## Example:
+![altimg](https://raw.githubusercontent.com/neato0079/art-archives/main/img/archive-img1.png)
+
+![altimg](https://raw.githubusercontent.com/neato0079/art-archives/main/img/archive-img2.png)
